@@ -26,7 +26,7 @@ public class UserDetailService implements UserDetailsService {
     Usuario usuario = null;
     try {
       usuario = usuarioDao.getByUsername(securityUtil.encriptar(username));
-      return new User(usuario.getNombreUsuario(), usuario.getContrasena(), new ArrayList<>());
+      return new User(usuario.getNombreUsuario(), "{noop}" + usuario.getContrasena(), new ArrayList<>());
     } catch (Exception e) {
       return null;
     }

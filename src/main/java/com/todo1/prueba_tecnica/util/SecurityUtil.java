@@ -1,6 +1,8 @@
 package com.todo1.prueba_tecnica.util;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
@@ -50,5 +52,13 @@ public class SecurityUtil {
       byte[] bytesEncriptados = Base64.getDecoder().decode(datosEncriptados);
       byte[] datosDesencriptados = cipher.doFinal(bytesEncriptados);
       return new String(datosDesencriptados);
+  }
+
+  public static String getUser() {
+    if (SecurityContextHolder.getContext().getAuthentication() != null) {
+      User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      return currentUser.getUsername();
+    }
+    return "";
   }
 }
